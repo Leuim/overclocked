@@ -33,5 +33,10 @@ class CategoryCreate(CreateView):
 class CategoryDetail(DetailView):
     model = Category
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = self.object.product_set.all()
+        return context
+    
 class CategoryList(ListView):
     model = Category

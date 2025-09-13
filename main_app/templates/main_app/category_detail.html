@@ -9,5 +9,13 @@
 {% block content %}
 <div>
     <h2>{{ object.name }}</h2>
+    {% if products %}
+        {% for product in products %}
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.price }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No products in this category.</p>
+    {% endif %}
 </div>
 {% endblock %}
