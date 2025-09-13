@@ -41,7 +41,7 @@ class Product(models.Model):
     name = models.CharField()
     quantity = models.IntegerField()
     price = models.IntegerField()
-    image = models.ImageField(upload_to="products/", blank=True, null=True)
+    image = models.ImageField(upload_to="main_app/static/uploads/", blank=True, null=True, default="")
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
@@ -61,6 +61,3 @@ class Cartitem(models.Model):
     
     def __str__(self):
         return f"Cart item is {self.product} quantity: {self.quantity} price: {self.price}"
-
-
-
