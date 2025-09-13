@@ -61,4 +61,4 @@ class ProductUpdate(UpdateView):
 
 class ProductDelete(DeleteView):
     model = Product
-    success_url = '/Products/'    
+    success_url = '/products/'    

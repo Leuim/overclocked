@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ object.name }}
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ product.name }}</h1>
+        <img src="{% static product.image|cut:'main_app/static/' %}" width="200px" height="200px" alt="Product image">
+        <p>Available: {{ product.quantity }}</p>
+        <p>Price: {{ product.price }}BD</a></p>
+        <p>description: <br> {{ product.description }}</p>
+        <div>
+            <a href="{% url 'products-update' product.id %}">Edit</a>
+            <a href="{% url 'products-delete' product.id %}">Delete</a>
+        </div>
+</div>
+{% endblock %}
