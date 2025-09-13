@@ -7,11 +7,12 @@ Category List
 {% endblock %}
 
 {% block content %}
+    <button><a href="{% url 'categories-create' %}">add new category</a></button>
 {% for category in category_list %}
 <div>
-    <button><a href="{% url 'categorys-create' %}">add new category</a></button>
+
     <div>
-        <p><a href="{% url 'categorys-detail' category.id %}">{{ category.name }}</a></p>
+        <p><a href="{% url 'categories-detail' category.id %}">{{ category.name }}</a></p>
     </div>
 </div>
 {% endfor %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+All Products
+{% endblock %}
+
+{% block content %}
+    {% if product %}
+        <h1>Edit {{ product.name }}</h1>
+    {% else %}
+        <h1>Add New Product</h1>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
