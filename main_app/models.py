@@ -26,7 +26,6 @@ class Order(models.Model):
         return f"Order belongs {self.cart}"
 
 
-
 # Category 
 class Category(models.Model):
     name = models.CharField()
@@ -35,12 +34,8 @@ class Category(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('categorys-detail', kwargs={'category_id': self.id})
+        return reverse('categories-detail', kwargs={'pk': self.id})
     
-
-
-
-
 # Product
 class Product(models.Model):
     name = models.CharField()
@@ -52,8 +47,10 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('products-detail', kwargs={'pk': self.id})
  
-
 
 # Cartitem 
 class Cartitem(models.Model):
