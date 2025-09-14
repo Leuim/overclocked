@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}
-Category List
+    Category List
 {% endblock %}
 
 {% block content %}
-
+<a class="btn btn-primary" href="{% url 'products-create' %}">add new product</a>
 {% if product %}
 
 {% for product in product_list %}
 <div>
-    <button><a href="{% url 'products-create' %}">add new product</a></button>
+    
     <div>
         <p><a href="{% url 'products-detail' product.id %}">{{ product.name }}</a></p>
         <img src="{% static product.image|cut:'main_app/static/' %}" width="200px" height="200px" alt="Product image">

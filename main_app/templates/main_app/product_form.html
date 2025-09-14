@@ -7,16 +7,24 @@ All Products
 {% endblock %}
 
 {% block content %}
-    {% if product %}
+<div class="container d-flex justify-content-center " >
+<div class="card col-6 shadow">
+    <div class="card-header bg-secondary text-light text-center mb-2">
+    {% if product %}  
         <h1>Edit {{ product.name }}</h1>
     {% else %}
         <h1>Add New Product</h1>
     {% endif %}
+    </div>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
         </table>
-        <button type="submit">Submit</button>
+        <span class="d-flex justify-content-center">
+        <button class="btn btn-primary  my-2 w-50" type="submit">Submit</button>
+        </span>
     </form>
+</div>
+</div>
 {% endblock %}

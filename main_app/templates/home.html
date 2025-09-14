@@ -1,3 +1,57 @@
 {% extends 'base.html' %}
-
 {% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div id="page-loader" class="loader d-flex justify-content-center align-content-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div id="main-content" style="display:none;">
+
+    <div id="products-slides" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+            {% for product in products|slice:":5" %}
+            <button type="button" data-bs-target="#products-slides" data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}"></button>
+            {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+            {% for product in products|slice:":5" %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="d-block w-100">
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#products-slides" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#products-slides" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <div class="other-content mt-4">
+       
+    </div>
+
+</div> 
+
+
+<script>
+window.addEventListener('load', () => {
+    document.getElementById('page-loader').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+});
+</script>
+
+{% endblock %}
