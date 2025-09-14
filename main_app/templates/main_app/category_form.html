@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block title %}
-All Categories
+Add category
 {% endblock %}
 
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{ form.as_table }}

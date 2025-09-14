@@ -25,8 +25,8 @@
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
-    <p>Already have an account? <a href="{% url 'login' %}">Click here to login!</a></p>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <p>Already have an account? <a class="text-decoration-none" href="{% url 'login' %}">Click here to login!</a></p>
 </form>
 
 {% endblock %}

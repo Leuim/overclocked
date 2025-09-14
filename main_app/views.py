@@ -45,6 +45,13 @@ class CategoryDetail(DetailView):
 class CategoryList(ListView):
     model = Category
     
+class CategoryDelete(DeleteView):
+    model = Category
+    success_url = '/categories/' 
+
+class CategoryUpdate(UpdateView):
+    model = Category
+    fields = '__all__'    
 # Product cbv's
 class ProductList(ListView):
     model = Product
@@ -58,7 +65,7 @@ class ProductCreate(CreateView):
     
 class ProductUpdate(UpdateView):
     model = Product
-    fields = '__all__'
+    fields = ['name','quantity','price','image','description', 'category']
 
 class ProductDelete(DeleteView):
     model = Product

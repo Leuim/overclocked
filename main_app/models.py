@@ -30,6 +30,7 @@ class Order(models.Model):
 # Category 
 class Category(models.Model):
     name = models.CharField()
+    image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     
     def __str__(self):
         return self.name
@@ -42,7 +43,7 @@ class Product(models.Model):
     name = models.CharField()
     quantity = models.IntegerField()
     price = models.IntegerField()
-    image = models.ImageField(upload_to="main_app/static/uploads/", blank=True, null=True, default="")
+    image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
