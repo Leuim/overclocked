@@ -94,3 +94,9 @@ body {
   width: 100%;               
   color:#adb6c4        
 }
+
+#categoryList {
+  height:calc(100% - 60px);
+  background: #e8ebfa;
+  border:1px  solid rgb(198, 197, 209);
+}
