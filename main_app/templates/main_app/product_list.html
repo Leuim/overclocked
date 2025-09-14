@@ -7,14 +7,12 @@
 
 {% block content %}
 <a class="btn btn-primary" href="{% url 'products-create' %}">add new product</a>
-{% if product %}
-
+{% if product_list %}
 {% for product in product_list %}
-<div>
-    
+<div>  
     <div>
         <p><a href="{% url 'products-detail' product.id %}">{{ product.name }}</a></p>
-        <img src="{% static product.image|cut:'main_app/static/' %}" width="200px" height="200px" alt="Product image">
+        <img src="{{ category.image.url }}" width="200px" height="200px" alt="Product image">
         <p>Available: {{ product.quantity }}</p>
         <p>Price: {{ product.price }}BD</a></p>
     </div>

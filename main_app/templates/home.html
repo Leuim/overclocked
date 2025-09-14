@@ -7,13 +7,7 @@ Home
 
 {% block content %}
 
-<div id="page-loader" class="loader d-flex justify-content-center align-content-center">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div>
-
-<div id="main-content" style="display:none;">
+<div style="width: 100%;">
 
     <div id="products-slides" class="carousel slide" data-bs-ride="carousel">
 
@@ -27,7 +21,7 @@ Home
         <div class="carousel-inner">
             {% for product in products|slice:":5" %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="d-block w-100">
+                <img src="{% static product.image|cut:'main_app/static/' %}" alt="{{ product.name }}" height="400px" class="d-block w-100 ">
             </div>
             {% endfor %}
         </div>
@@ -40,18 +34,10 @@ Home
         </button>
     </div>
 
-    <div class="other-content mt-4">
-       
+    <div class="container-fluid mt-2 d-flex bg-primary" >
+       <h1>hello</h1>
     </div>
 
 </div> 
-
-
-<script>
-window.addEventListener('load', () => {
-    document.getElementById('page-loader').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
-});
-</script>
 
 {% endblock %}
