@@ -9,6 +9,8 @@ urlpatterns = [
     path('categories/create/', views.CategoryCreate.as_view(), name="categories-create"),
     path('categories/', views.CategoryList.as_view(), name='categories-index'),
     path('categories/<int:pk>', views.CategoryDetail.as_view(), name='categories-detail'),
+    path('categories/<int:pk>/update/', views.CategoryUpdate.as_view(), name='categories-update'),
+    path('categories/<int:pk>/delete/', views.CategoryDelete.as_view(), name='categories-delete'),
     
     # Product's cbv's
     path('products/create/', views.ProductCreate.as_view(), name="products-create"),

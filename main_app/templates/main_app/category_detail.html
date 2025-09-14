@@ -9,6 +9,12 @@
 {% block content %}
 <div>
     <h2>{{ object.name }}</h2>
+    {% if user.is_staff %}
+        <div>
+            <a href="{% url 'categories-update' category.id %}">Edit</a>
+            <a href="{% url 'categories-delete' category.id %}">Delete</a>
+        </div>
+    {% endif %}
     {% if products %}
         {% for product in products %}
             <h3>{{ product.name }}</h3>
