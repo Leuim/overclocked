@@ -8,7 +8,8 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    products = Product.objects.all()
+    return render(request, 'home.html', {"products": products})
 
 def signup(request):
     if request.method == 'POST':
@@ -53,7 +54,7 @@ class ProductDetail(DetailView):
     
 class ProductCreate(CreateView):
     model = Product
-    fields = '__all__'
+    fields = ['name','quantity','price','image','description', 'category']
     
 class ProductUpdate(UpdateView):
     model = Product
