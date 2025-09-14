@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 
 # Create your models here.
 
@@ -44,6 +45,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="main_app/static/uploads/", blank=True, null=True, default="")
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return self.name
