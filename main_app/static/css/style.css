@@ -36,7 +36,7 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: #495057;
+  background-color: #4ba5ff;
 }
 
 .content {
@@ -99,4 +99,15 @@ body {
   height:calc(100% - 60px);
   background: #e8ebfa;
   border:1px  solid rgb(198, 197, 209);
+}
+
+.category-card:hover {
+  cursor: pointer;
+  transform: scale(1.05);  
+  transition: transform 0.3s ease;
+}
+
+.category-image {
+  height: 300px;
+  width: 100%;
 }
