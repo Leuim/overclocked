@@ -21,7 +21,7 @@ Home
         <div class="carousel-inner">
             {% for product in products|slice:":5" %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{% static product.image|cut:'main_app/static/' %}" alt="{{ product.name }}" height="400px" class="d-block w-100 ">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" height="400px" class="d-block w-100 ">
             </div>
             {% endfor %}
         </div>
@@ -34,10 +34,10 @@ Home
         </button>
     </div>
 
-    <div class="container-fluid mt-2 d-flex bg-primary" >
-       <h1>hello</h1>
+    <div class="container-fluid mt-2 d-flex bg-primary">
+        <h1>hello</h1>
     </div>
 
-</div> 
+</div>
 
 {% endblock %}
