@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/signup', views.signup, name="signup"),
-    
+    path('accounts/profile', views.profile, name="profile"),
     # Category cbv's 
     path('categories/create/', views.CategoryCreate.as_view(), name="categories-create"),
     path('categories/', views.CategoryList.as_view(), name='categories-index'),
