@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 # Create your models here.
 
 # Profile
@@ -52,12 +51,14 @@ class Order(models.Model):
 class Category(models.Model):
     name = models.CharField()
     image = models.ImageField(upload_to="uploads/", blank=True, null=True)
+
     
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
         return reverse('categories-detail', kwargs={'pk': self.id})
+    
     
     
 # Product
@@ -72,6 +73,10 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('products-detail', kwargs={'pk': self.id})
+ 
     
     def get_absolute_url(self):
         return reverse('products-detail', kwargs={'pk': self.id})
