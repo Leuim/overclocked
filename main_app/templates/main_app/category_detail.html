@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center fw-bold">{{ object.name }}</h1>
+<h1 class="text-center fw-bold text-muted">{{ object.name }}</h1>
 <div class="d-flex justify-content-between">
     <div class="mb-4 d-flex gap-3">
         {% if user.is_staff %}
@@ -27,8 +27,6 @@
     </div>
     {% endif %}
 </div>
-
-
 
 
 {% if products %}

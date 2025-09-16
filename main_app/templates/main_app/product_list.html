@@ -2,22 +2,56 @@
 {% load static %}
 
 {% block title %}
-    Category List
+    Products List
 {% endblock %}
 
 {% block content %}
-<a class="btn btn-primary" href="{% url 'products-create' %}">add new product</a>
-{% if product_list %}
-{% for product in product_list %}
-<div>  
+<h1 class="text-center fw-bold text-muted">Products List</h1>
+<div class="d-flex mb-4 gap-3">
+    {% if user.is_staff %}
     <div>
-        <p><a href="{% url 'products-detail' product.id %}">{{ product.name }}</a></p>
-        <img src="{{ category.image.url }}" width="200px" height="200px" alt="Product image">
-        <p>Available: {{ product.quantity }}</p>
-        <p>Price: {{ product.price }}BD</a></p>
+        <a class="btn btn-primary" href="{% url 'products-create' %}">add new product</a>
+    </div>
+    {% endif %}
+    <div>
+        <input class="form-control shadow" type="text" name="search" id="categorysearch"
+                placeholder="Search Product Name...">
     </div>
 </div>
-{% endfor %}
+{% if product_list %}
+<div class="row g-4">
+    {% for product in product_list %}
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="category-card card shadow h-100 border-1 ">
+            {% if product.image %}
+            <a href="{% url 'products-detail' product.id %}">
+                <img src="{{ product.image.url }}" class="card-img-top img-fluid object-fit-cover rounded-top"
+                    alt="{{ product.name }} image" style="height: 160px;">
+            </a>
+            {% endif %}
+
+            <div class="card-body d-flex flex-column justify-content-between">
+                <h2 class="card-title h4 fw-bold  mb-2" title="{{ product.name }}">
+                    {{ product.name }}
+                </h2>
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <div class="input-group input-group-sm" style="width: 90px;">
+                        <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
+                        <button class="btn btn-warning" type="submit">
+                            <i class="fa-solid fa-plus"></i> 
+                        </button>
+                    </div>
+                    <div>
+                        <span class="fw-bold text-danger">{{ product.price }} <span
+                                class="text-muted fw-bold">BD</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% else %}
 
