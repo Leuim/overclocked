@@ -111,3 +111,17 @@ body {
   height: 300px;
   width: 100%;
 }
+
+.profile-avatar {
+  width: 120px;           
+  height: 120px;
+  border-radius: 50%;
+  background-color: #3a84f3;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 48px;     
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
