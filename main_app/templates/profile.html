@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-1 p-4">
+        <div class="row g-4 align-items-center">
+
+
+            <div class="col-md-3 d-flex justify-content-center">
+                {% if user.profile.image %}
+                
+                    <img src="{{ user.profile.image.url }}" alt="Profile Image" 
+                         class="rounded-circle shadow-sm" 
+                         style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                    <div class="profile-avatar shadow-sm" style="width: 120px; height: 120px; font-size: 48px;">
+                        {{ user.username|first|upper }}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <div class="col-md-9">
+                <h2 class="fw-bold mb-3">{{ user.username }}</h2>
+                <p class="text-muted mb-2"><strong>Email:</strong> {{ user.email }}</p>
+                <p class="text-muted mb-2"><strong>Phone:</strong> {{ user.profile.phone|default:"Not set" }}</p>
+                <p class="text-muted mb-2"><strong>Address:</strong> {{ user.profile.address|default:"Not set" }}</p>
+
+ 
+                <a href="" class="btn btn-primary mt-3">
+                    <i class="fa-solid fa-pen-to-square me-2"></i> Edit Profile
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

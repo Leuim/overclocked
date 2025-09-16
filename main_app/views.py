@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from .models import Category, Product
+from .forms import UserProfileCreationForm
+from .models import Category, Product, Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -13,13 +14,13 @@ def home(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserProfileCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')
     else:
-         form = UserCreationForm()
+         form = UserProfileCreationForm()
            
     context = {'form':form}
     return render(request, 'signup.html', context)        
@@ -28,6 +29,9 @@ def all_categories(request):
     categories = Category.objects.all()
     return render(request, "category/index.html", categories)
 
+def profile(request):
+    profile = request.user.profile
+    return render(request, 'profile.html', {"profile":profile})
 
 # Category cbv's
 class CategoryCreate(LoginRequiredMixin, CreateView):

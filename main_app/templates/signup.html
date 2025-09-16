@@ -12,21 +12,68 @@
 {% if form.errors %}
 <ul>
     {% for field in form %}
-        {% for error in field.errors %}
-            <li>{{ field.label }}: {{ error }}</li>
-        {% endfor %}
+    {% for error in field.errors %}
+    <li>{{ field.label }}: {{ error }}</li>
+    {% endfor %}
     {% endfor %}
     {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
+    <li>{{ error }}</li>
     {% endfor %}
 </ul>
 {% endif %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <p>Already have an account? <a class="text-decoration-none" href="{% url 'login' %}">Click here to login!</a></p>
-</form>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-2">
+                <div class="card-body p-4">
+                    <h2 class="fw-bold mb-4 text-center">Create Account</h2>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="mb-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.address.label_tag }}
+                            {{ form.address }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.image.label_tag }}
+                            {{ form.image }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    <p>Already have an account? <a class="text-decoration-none" href="{% url 'login' %}">Click here to login!</a></p>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
