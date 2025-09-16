@@ -38,9 +38,15 @@
                 <div class="dropdown">
                     <a class="d-flex align-items-center text-decoration-none dropdown-toggle fw-bold" href="#"
                         id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if user.profile.image %}
+
+                        <img src="{{ user.profile.image.url }}" alt="Profile Image" class="rounded-circle me-2"
+                            style="width: 40px; height: 40px; object-fit: cover;">
+                        {% else %}
                         <div class="avatar me-2">
                             {{ user.username|first|upper }}
                         </div>
+                        {% endif %}
                         <span>{{ user.username }}</span>
                     </a>
 

@@ -10,8 +10,9 @@
 
 
             <div class="col-md-3 d-flex justify-content-center">
-                {% if user.profile.profile_image %}
-                    <img src="{{ user.profile.profile_image.url }}" alt="Profile Image" 
+                {% if user.profile.image %}
+                
+                    <img src="{{ user.profile.image.url }}" alt="Profile Image" 
                          class="rounded-circle shadow-sm" 
                          style="width: 120px; height: 120px; object-fit: cover;">
                 {% else %}
