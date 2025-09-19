@@ -22,4 +22,7 @@ urlpatterns = [
     # Carts's cbv's
     path("cart/", views.CartDetail.as_view(), name="cart-detail"),
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add-to-cart'),
+    
+    #Searchbar 
+    path("search-suggestions/", views.search_suggestions, name="search-suggestions"),
 ]

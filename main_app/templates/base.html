@@ -102,16 +102,23 @@
           {% endif %}
         </div>
 
-        <form class="d-flex w-25">
+        <form class="d-flex w-25 position-relative" onsubmit="return false;">
           <input
+            id="searchInput"
             class="form-control me-2"
             type="search"
             placeholder="Search an item..."
             aria-label="Search"
+            autocomplete="off"
           />
           <button class="btn btn-outline-secondary" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
+          <ul
+            id="searchDropdown"
+            class="list-group position-absolute w-100"
+            style="top: 100%; z-index: 1000"
+          ></ul>
         </form>
 
         <div class="d-flex gap-2">
@@ -130,3 +137,46 @@
     </div>
   </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const searchDropdown = document.getElementById("searchDropdown");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.trim();
+
+      if (query.length < 2) {
+        searchDropdown.innerHTML = "";
+        return;
+      }
+
+      fetch(`/search-suggestions/?q=${query}`)
+        .then((response) => response.json())
+        .then((data) => {
+          searchDropdown.innerHTML = "";
+          if (data.length > 0) {
+            data.forEach((product) => {
+              const item = document.createElement("li");
+              item.className = "list-group-item d-flex align-items-center";
+              item.innerHTML = `
+              <img src="${product.image}" alt="${product.name}" width="40" height="40" class="me-2 rounded">
+              <span>${product.name}</span>
+            `;
+              item.onclick = () => {
+                window.location.href = `/products/${product.id}/`; // adjust detail page URL
+              };
+              searchDropdown.appendChild(item);
+            });
+          }
+        });
+    });
+    document.addEventListener("click", function (e) {
+      if (
+        !searchInput.contains(e.target) &&
+        !searchDropdown.contains(e.target)
+      ) {
+        searchDropdown.innerHTML = "";
+      }
+    });
+  });
+</script>

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
+from django.http import JsonResponse
 # Create your views here.
 def home(request):
     products = Product.objects.all()
@@ -99,3 +100,15 @@ def add_to_cart(request, product_id):
     cart.total_price = sum(i.price for i in cart.cartitem_set.all())
     cart.save()
     return redirect('cart-detail')
+
+def search_suggestions(request):
+    query = request.GET.get("q", "")
+    products = Product.objects.filter(name__icontains=query)[:5]  # limit to 5
+    results = []
+    for p in products:
+        results.append({
+            "id": p.id,
+            "name": p.name,
+            "image": p.image.url if p.image else ""
+        })
+    return JsonResponse(results, safe=False)
