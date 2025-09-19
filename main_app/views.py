@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserProfileCreationForm
-from .models import Category, Product, Profile
+from .models import Category, Product, Profile, Cart, Cartitem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -74,3 +74,28 @@ class ProductUpdate(UpdateView):
 class ProductDelete(DeleteView):
     model = Product
     success_url = '/products/'    
+    
+class CartDetail(DetailView):
+    model= Cart
+    template_name = "main_app/cart_detail.html"
+    context_object_name = "cart"
+    def get_object(self):
+        cart, created = Cart.objects.get_or_create(
+            user=self.request.user,
+            status="active",
+            defaults={"total_price": 0}
+        )
+        return cart
+
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    qty = int(request.POST.get("quantity", 1)) 
+    cart, _ = Cart.objects.get_or_create(user=request.user, status="active", defaults={"total_price": 0})
+    item, created = Cartitem.objects.get_or_create(cart=cart, product=product, defaults={"quantity": qty, "price": product.price * qty})
+    if not created:
+        item.quantity += qty
+        item.price = item.quantity * product.price
+        item.save()
+    cart.total_price = sum(i.price for i in cart.cartitem_set.all())
+    cart.save()
+    return redirect('cart-detail')

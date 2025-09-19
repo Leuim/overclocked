@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container d-flex justify-content-center mt-4">
+  <div class="card shadow-sm" style="width: 100%; max-width: 500px">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-3">Your Cart</h4>
+
+      {% if cart.cartitem_set.all %}
+      <ul class="list-group mb-3">
+        {% for item in cart.cartitem_set.all %}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          {{ item.product.name }} × {{ item.quantity }}
+          <span>{{ item.price }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <p class="text-end"><strong>Total: </strong>{{ cart.total_price }}</p>
+      {% else %}
+      <p class="text-center">Your cart is empty.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

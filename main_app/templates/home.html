@@ -1,43 +1,62 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}
-Home
-{% endblock %}
-
+{% extends 'base.html' %} {% load static %} {% block title %} Home {% endblock%}
 {% block content %}
 
-<div style="width: 100%;">
-
-    <div id="products-slides" class="carousel slide" data-bs-ride="carousel">
-
-        <div class="carousel-indicators">
-            {% for product in products|slice:":5" %}
-            <button type="button" data-bs-target="#products-slides" data-bs-slide-to="{{ forloop.counter0 }}"
-                class="{% if forloop.first %}active{% endif %}"></button>
-            {% endfor %}
-        </div>
-
-        <div class="carousel-inner">
-            {% for product in products|slice:":5" %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" height="400px" class="d-block w-100 ">
-            </div>
-            {% endfor %}
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#products-slides" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#products-slides" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
+<div style="width: 100%">
+  <div id="products-slides" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      {% for product in products|slice:":5" %}
+      <button
+        type="button"
+        data-bs-target="#products-slides"
+        data-bs-slide-to="{{ forloop.counter0 }}"
+        class="{% if forloop.first %}active{% endif %}"
+      ></button>
+      {% endfor %}
     </div>
 
-    <div class="container-fluid mt-2 d-flex bg-primary">
-        <h1>hello</h1>
+    <div class="carousel-inner">
+      {% for product in products|slice:":5" %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        {% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          alt="{{ product.name }}"
+          height="400px"
+          class="d-block w-100"
+        />
+        {% else %}
+        <img
+          src="{% static 'default-product.png' %}"
+          alt="{{ product.name }}"
+          height="400px"
+          class="d-block w-100"
+        />
+        {% endif %}
+      </div>
+      {% endfor %}
     </div>
 
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#products-slides"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#products-slides"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <div class="container-fluid mt-2 d-flex bg-primary">
+    <h1>hello</h1>
+  </div>
 </div>
 
 {% endblock %}
