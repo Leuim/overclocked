@@ -12,7 +12,11 @@ from django.http import JsonResponse
 # Create your views here.
 def home(request):
     products = Product.objects.all()
-    return render(request, 'home.html', {"products": products})
+    categories = Category.objects.all()
+    all_categories_products = Category.objects.prefetch_related('product_set').all()
+    return render(request, 'home.html', {"products": products,
+                                         "categories": categories,
+                                         "categories_products":all_categories_products})
 
 def signup(request):
     if request.method == 'POST':
