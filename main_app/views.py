@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
 from .forms import UserProfileCreationForm
 from .models import Category, Product, Profile, Cart, Cartitem
 from django.contrib.auth.decorators import login_required
@@ -109,6 +110,7 @@ def search_suggestions(request):
         results.append({
             "id": p.id,
             "name": p.name,
-            "image": p.image.url if p.image else ""
+            "image": p.image.url if p.image else "",
+            "url": reverse("products-detail", args=[p.id]) 
         })
     return JsonResponse(results, safe=False)
