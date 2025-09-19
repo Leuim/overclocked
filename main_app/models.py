@@ -29,12 +29,16 @@ def save_user_profile(sender, instance, **kwargs):
 # Cart
 class Cart(models.Model):
     total_price = models.IntegerField()
-    # do the choice's once known
+    STATUS = [
+    ("active", "Active"),
+    ("completed", "Completed"),
+]
+
     status = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"Cart belongs to {self.user}"
+        return f"{self.user.username} - {self.status} cart ({self.created_at.date()})"
 
 
 # Order

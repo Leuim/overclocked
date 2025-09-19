@@ -19,4 +19,7 @@ urlpatterns = [
     path('products/<int:pk>/update/', views.ProductUpdate.as_view(), name='products-update'),
     path('products/<int:pk>/delete/', views.ProductDelete.as_view(), name='products-delete'),
     
+    # Carts's cbv's
+    path("cart/", views.CartDetail.as_view(), name="cart-detail"),
+    path('cart/add/<int:product_id>/', views.add_to_cart, name='add-to-cart'),
 ]

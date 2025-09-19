@@ -1,75 +1,93 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}
-Products List
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} Products List
+{%endblock %} {% block content %}
 <h1 class="text-center fw-bold text-muted">Products List</h1>
+<hr style="border: none; height: 2px; background-color: rgb(148, 148, 148)" />
 <div class="d-flex mb-4 gap-3">
-    {% if user.is_staff %}
-    <div>
-        <a class="btn btn-primary" href="{% url 'products-create' %}">add new product</a>
-    </div>
-    {% endif %}
-    <div>
-        <input class="form-control shadow" type="text" name="search" id="categorysearch"
-            placeholder="Search Product Name...">
-    </div>
+  {% if user.is_staff %}
+  <div>
+    <a class="btn btn-primary" href="{% url 'products-create' %}"
+      >add new product</a
+    >
+  </div>
+  {% endif %}
+  <div>
+    <input
+      class="form-control shadow"
+      type="text"
+      name="search"
+      id="categorysearch"
+      placeholder="Search Product Name..."
+    />
+  </div>
 </div>
 {% if product_list %}
 <div class="row g-4">
-    {% for product in product_list %}
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <div class="category-card card shadow h-100 border-1 ">
-            {% if product.image %}
-            <a href="{% url 'products-detail' product.id %}">
-                <img src="{{ product.image.url }}" class="card-img-top img-fluid object-fit-cover rounded-top"
-                    alt="{{ product.name }} image" style="height: 160px;">
-            </a>
-            {% endif %}
+  {% for product in product_list %}
 
-            <div class="card-body d-flex flex-column justify-content-between">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                    <h2 class="card-title h4 fw-bold">
-                        {{ product.name }}
-                    </h2>
-                </div>
-                <div>
-                    {% if product.quantity > 0 %}
-                    <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
-                    {% else %}
-                    <span class="badge bg-danger">Out of Stock</span>
-                    {% endif %}
-                </div>
-                </div>
+  <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+    <a
+      class="text-decoration-none"
+      href="{% url 'products-detail' product.id %}"
+    >
+      <div class="category-card card shadow h-100 border-1">
+        {% if product.image %}
 
+        <img
+          src="{{ product.image.url }}"
+          class="card-img-top img-fluid object-fit-cover rounded-top"
+          alt="{{ product.name }} image"
+          style="height: 160px"
+        />
 
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <div class="input-group input-group-sm" style="width: 90px;">
-                        <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
-                        <button class="btn btn-warning" type="submit">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <span class="fw-bold text-danger">{{ product.price }} <span
-                                class="text-muted fw-bold">BD</span></span>
-                    </div>
-                </div>
+        {% endif %}
 
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <h2 class="card-title h4 fw-bold">{{ product.name }}</h2>
             </div>
+            <div>
+              {% if product.quantity > 0 %}
+              <span class="badge bg-success"
+                >In Stock ({{ product.quantity }})</span
+              >
+              {% else %}
+              <span class="badge bg-danger">Out of Stock</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div
+            class="d-flex justify-content-between align-items-center mt-auto"
+          >
+            <div class="input-group input-group-sm" style="width: 90px">
+              <input
+                class="form-control text-center"
+                type="number"
+                min="1"
+                value="1"
+                name="quantity"
+              />
+              <button class="btn btn-warning" type="submit">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div>
+              <span class="fw-bold text-danger"
+                >{{ product.price }}
+                <span class="text-muted fw-bold">BD</span></span
+              >
+            </div>
+          </div>
         </div>
-    </div>
-    {% endfor %}
+      </div>
+    </a>
+  </div>
+  {% endfor %}
 </div>
 
 {% else %}
 
 <p>No Products available yet.</p>
 
-{% endif %}
-
-{% endblock %}
+{% endif %} {% endblock %}
