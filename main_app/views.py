@@ -114,3 +114,15 @@ def search_suggestions(request):
             "url": reverse("products-detail", args=[p.id]) 
         })
     return JsonResponse(results, safe=False)
+def checkout(request):
+    if request.method == "POST":
+        address = request.POST.get("address")
+        payment_method = request.POST.get("payment_method")
+        Cart.objects.filter(user=request.user, status="active").update(
+            status="completed",
+        )
+        return redirect("home")
+def order_history(request):
+    # Get all completed carts for this user
+    orders = Cart.objects.filter(user=request.user, status="completed").order_by("-id")
+    return render(request, "main_app/order_history.html", {"orders": orders})
