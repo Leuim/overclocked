@@ -25,4 +25,12 @@ urlpatterns = [
     
     #Searchbar 
     path("search-suggestions/", views.search_suggestions, name="search-suggestions"),
+    
+    #Checkout
+    path("checkout/", views.checkout, name="checkout"),
+    
+    #orders
+    path("orders/", views.order_history, name="order-history"),
+
+
 ]

@@ -18,6 +18,52 @@
       </ul>
 
       <p class="text-end"><strong>Total: </strong>{{ cart.total_price }}</p>
+      <button
+        class="btn btn-success w-100"
+        data-bs-toggle="modal"
+        data-bs-target="#checkoutModal"
+      >
+        Checkout
+      </button>
+      <div class="modal fade" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form method="post" action="{% url 'checkout' %}">
+              {% csrf_token %}
+              <div class="modal-header">
+                <h5 class="modal-title">Checkout</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+
+              <div class="modal-body">
+                <label class="form-label">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  class="form-control"
+                  required
+                />
+                <input type="hidden" name="payment_method" value="cash" />
+                <label class="form-label">Payment Method</label>
+                <select name="payment_method" class="form-select" required>
+                  <option value="cash">Cash</option>
+                  <!-- You can add more later, e.g. card, paypal -->
+                </select>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">
+                  Confirm Order
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       {% else %}
       <p class="text-center">Your cart is empty.</p>
       {% endif %}

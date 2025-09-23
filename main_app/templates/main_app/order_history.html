@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-4">
+  <h2>Your Order History</h2>
+
+  {% if orders %}
+  <div class="list-group">
+    {% for order in orders %}
+    <div class="list-group-item mb-3">
+      <h5>Order #{{ order.id }}</h5>
+      <p><strong>Total:</strong> ${{ order.total_price }}</p>
+      <p><strong>Status:</strong> {{ order.status }}</p>
+
+      <h6>Items:</h6>
+      <ul>
+        {% for item in order.cartitem_set.all %}
+        <li>
+          {{ item.product.name }} (x{{ item.quantity }}) - ${{ item.price }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>You haven’t placed any orders yet.</p>
+  {% endif %}
+</div>
+{% endblock %}
