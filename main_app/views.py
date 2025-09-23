@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -163,3 +164,21 @@ def order_history(request):
 def all_orders(request):
     orders = Cart.objects.filter(status="completed").order_by("-created_at")
     return render(request, "orders/all_orders.html", {"orders": orders})
+def update_cart_item(request, item_id):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        new_qty = int(data.get("quantity", 1))
+
+        item = Cartitem.objects.get(id=item_id)
+        item.quantity = new_qty
+        item.price = new_qty * item.product.price
+        item.save()
+
+        cart = item.cart
+        cart.total_price = sum(i.price for i in cart.cartitem_set.all())
+        cart.save()
+
+        return JsonResponse({
+            "item_price": item.price,
+            "cart_total": cart.total_price
+        })

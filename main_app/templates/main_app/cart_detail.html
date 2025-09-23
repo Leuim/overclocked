@@ -29,27 +29,33 @@
 
       {% if cart.cartitem_set.all %}
       <ul class="list-group mb-3">
-        {% for item in cart.cartitem_set.all %}
-        <li
-          class="list-group-item d-flex justify-content-between align-items-center"
-        >
-          {{ item.product.name }} × {{ item.quantity }}
-          <span>{{ item.price }}</span>
-          <form
-            method="post"
-            action="{% url 'remove-from-cart' item.id %}"
-            class="ms-2"
-          >
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-danger">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </form>
-        </li>
-        {% endfor %}
-      </ul>
+  {% for item in cart.cartitem_set.all %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div>
+      {{ item.product.name }}
+      <div class="d-flex align-items-center mt-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary update-qty" data-id="{{ item.id }}" data-action="decrease">-</button>
+        <input type="text" class="form-control form-control-sm mx-2 text-center qty-input" 
+               style="width: 60px;" value="{{ item.quantity }}" readonly>
+        <button type="button" class="btn btn-sm btn-outline-secondary update-qty" data-id="{{ item.id }}" data-action="increase">+</button>
+      </div>
+    </div>
 
-      <p class="text-end"><strong>Total: </strong>{{ cart.total_price }}</p>
+    <div>
+      <span class="item-price" id="item-price-{{ item.id }}">{{ item.price }}</span> BHD
+      <form method="post" action="{% url 'remove-from-cart' item.id %}" class="d-inline ms-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-danger">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </form>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+<p class="text-end"><strong>Total: </strong><span id="cart-total">{{ cart.total_price }}</span> BHD</p>
+
       <button
         class="btn btn-success w-100"
         data-bs-toggle="modal"
@@ -101,5 +107,39 @@
     </div>
   </div>
 </div>
+<script>
+document.querySelectorAll(".update-qty").forEach(button => {
+  button.addEventListener("click", () => {
+    const itemId = button.dataset.id;
+    const action = button.dataset.action;
+    const qtyInput = button.closest("li").querySelector(".qty-input");
+    let currentQty = parseInt(qtyInput.value);
+
+    if (action === "increase") {
+      currentQty += 1;
+    } else if (action === "decrease" && currentQty > 1) {
+      currentQty -= 1;
+    }
+
+    qtyInput.value = currentQty;
+
+    // Send AJAX request to backend
+    fetch(`/cart/update/${itemId}/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ quantity: currentQty })
+    })
+    .then(res => res.json())
+    .then(data => {
+      // Update price and total dynamically
+      document.querySelector(`#item-price-${itemId}`).textContent = data.item_price;
+      document.querySelector("#cart-total").textContent = data.cart_total;
+    });
+  });
+});
+</script>
 
 {% endblock %}
