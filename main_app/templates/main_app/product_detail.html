@@ -14,12 +14,11 @@
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'products-index' %}">Products</a></li>
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'products-detail' product.id %}"> {{ product.name }}</a></li>
-
             </ul>
         </div>
 
         <div class="col-4 text-center">
-            <h1 class="fw-bold text-muted mb-0">Products</h1>
+            <h1 class="fw-bold text-muted mb-0">{{ product.name }}</h1>
         </div>
         <div class="col-4 text-end">
 
@@ -28,66 +27,75 @@
 </div>
 <hr style="color: rgb(2, 49, 110); border: 2px solid;">
 <div class="container my-5">
-    <div class="card col-9 shadow-lg border-1 d-flex justify-content-center">
-        <div class="row g-0 ">
-
-
-            <div class="col-md-4 d-flex align-items-center justify-content-center bg-light p-3">
-                {% if product.image %}
-
-                <img src="{{ product.image.url }}" alt="{{ product.name }} image"
-                    class="img-fluid rounded  object-fit-cover shadow-sm"
-                    style="width: 100%; max-width: 450px; height: 450px; object-fit: cover; border: 1px solid rgb(143, 143, 143);">
-                {% endif %}
-            </div>
-
-            <div class="col-md-8">
-                <div class="card-body p-4 d-flex flex-column h-100">
-
-                    <h1 class="fw-bold mb-3">{{ product.name }}</h1>
-
-                    <h2 class="text-danger fw-bold mb-3 text-muted">
-                        {{ product.price }} BHD
-                    </h2>
-
-                    <p class="mb-3">
-                        {% if product.quantity > 0 %}
-                        <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div class="card shadow-lg border-1">
+                <div class="row g-0">
+                    
+                    <div class="col-md-4 d-flex align-items-center justify-content-center bg-light p-3">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" 
+                                 alt="{{ product.name }} image"
+                                 class="img-fluid rounded object-fit-cover shadow-sm"
+                                 style="width: 100%; max-width: 450px; height: 450px; object-fit: cover; border: 1px solid rgb(143, 143, 143);">
                         {% else %}
-                        <span class="badge bg-danger">Out of Stock</span>
+                            <img src="https://placehold.co/600x400" 
+                                 class="card-img-top img-fluid object-fit-cover rounded-top"
+                                 alt="{{ product.name }} image" 
+                                 style="height: 160px" />
                         {% endif %}
-                    </p>
-
-                    <p class="text-muted mb-4 flex-grow-1" style="white-space: pre-line;">
-                        {{ product.description }}
-                    </p>
-
-                    <form method="post" action="{% url 'add-to-cart' product.id %}">
-                        {% csrf_token %}
-                        <div class="d-flex align-items-center gap-2 mb-4">
-                            <div class="input-group input-group-sm" style="width: 120px;">
-                                <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
-                            </div>
-                            <button class="btn btn-warning" type="submit" {% if product.quantity == 0 %}disabled{% endif %}>
-                                <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
-                            </button>
-                        </div>
-                    </form>
-
-                    {% if user.is_staff %}
-                    <div class="d-flex gap-2 mt-auto">
-                        <a href="{% url 'products-update' product.id %}" class="btn btn-primary">
-                            <i class="fa-solid fa-pen-to-square"></i> Edit
-                        </a>
-                        <a href="{% url 'products-delete' product.id %}" class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i> Delete
-                        </a>
                     </div>
-                    {% endif %}
+
+                    <div class="col-md-8">
+                        <div class="card-body p-4 d-flex flex-column h-100">
+
+                            <h1 class="fw-bold mb-3">{{ product.name }}</h1>
+
+                            <h2 class="text-danger fw-bold mb-3 text-muted">
+                                {{ product.price }} BHD
+                            </h2>
+
+                            <p class="mb-3">
+                                {% if product.quantity > 0 %}
+                                    <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                {% endif %}
+                            </p>
+
+                            <p class="text-muted mb-4 flex-grow-1" style="white-space: pre-line;">
+                                {{ product.description }}
+                            </p>
+
+                            <form method="post" action="{% url 'add-to-cart' product.id %}">
+                                {% csrf_token %}
+                                <div class="d-flex align-items-center gap-2 mb-4">
+                                    <div class="input-group input-group-sm" style="width: 120px;">
+                                        <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
+                                    </div>
+                                    <button class="btn btn-warning" type="submit" {% if product.quantity == 0 %}disabled{% endif %}>
+                                        <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
+                                    </button>
+                                </div>
+                            </form>
+
+                            {% if user.is_staff %}
+                            <div class="d-flex gap-2 mt-auto">
+                                <a href="{% url 'products-update' product.id %}" class="btn btn-primary">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </a>
+                                <a href="{% url 'products-delete' product.id %}" class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

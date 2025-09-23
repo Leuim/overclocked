@@ -31,10 +31,6 @@ Category List
         <a class="btn btn-primary shadow" href="{% url 'categories-create' %}">Add New Category</a>
     </div>
     {% endif %}
-    <div>
-        <input class="form-control shadow" type="text" name="search" id="categorysearch"
-               placeholder="Search Category Name...">
-    </div>
 </div>
 
 {% if category_list %}
@@ -53,16 +49,6 @@ Category List
         </a>
     </div>
     {% endfor %}
-</div>
-
-<div class="d-flex justify-content-center">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
 </div>
 {% else %}
 <h2 class="text-muted fw-bold fs-4 text-center">No Categories Yet</h2>
