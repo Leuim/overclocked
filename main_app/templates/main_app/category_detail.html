@@ -19,7 +19,6 @@
             <h1 class="fw-bold text-muted mb-0">{{ category.name }}</h1>
         </div>
         <div class="col-4 text-end">
-
         </div>
     </div>
 </div>
@@ -29,7 +28,7 @@
   <div class="mb-4 d-flex gap-3">
     {% if user.is_staff %}
     <div>
-      <a class="btn btn-primary shadow" href="{% url 'products-create' %}">Add New Category</a>
+      <a class="btn btn-primary shadow" href="{% url 'products-create' %}">Add New Product</a>
     </div>
     {% endif %}
   </div>
