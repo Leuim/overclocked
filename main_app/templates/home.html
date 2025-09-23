@@ -53,30 +53,7 @@
     </div>
     {% endfor %}
   </div>
-
-  <button class="carousel-control-prev" type="button" da
-
-
-    <div class="d-flex flex-column gap-2 w-25 ">
-      {% for category in categories|slice:":3" %}
-      <a href="{% url 'categories-detail' category.id %}" class="text-decoration-none rounded-4 flex-grow-1 d-block shadow-lg"
-        style="
-        background-image: url('{{ category.image.url }}');
-        background-size: cover;
-        background-position: center;
-        border: 2px solid rgb(226,226,226);">
-
-        <div class="text-white p-2 fw-bold rounded-top-3 text-center" style="background-color: rgba(0,0,0,0.7);">
-          {{ category.name }}
-        </div>
-
-      </a>
-      {% endfor %}
-    </div>
-
   </div>
-</div>
-
 <div class="container-fluid mt-4 py-4" style="background-color: #313d49;">
   <div class="d-flex flex-wrap justify-content-center gap-4">
 
@@ -140,10 +117,11 @@
       <a class="text-decoration-none" href="{% url 'products-detail' product.id %}">
         <div class="category-card card shadow h-100 border-1">
           {% if product.image %}
-
           <img src="{{ product.image.url }}" class="card-img-top img-fluid object-fit-cover rounded-top"
             alt="{{ product.name }} image" style="height: 160px" />
-
+          {% else %}
+            <img src="https://placehold.co/600x400" class="card-img-top img-fluid object-fit-cover rounded-top"
+            alt="{{ product.name }} image" style="height: 160px" />
           {% endif %}
 
           <div class="card-body d-flex flex-column justify-content-between">

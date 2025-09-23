@@ -59,6 +59,9 @@ Products List
           alt="{{ product.name }} image"
           style="height: 160px"
         />
+        {% else %}
+            <img src="https://placehold.co/600x400" class="card-img-top img-fluid object-fit-cover rounded-top"
+            alt="{{ product.name }} image" style="height: 160px" />
 
         {% endif %}
 
