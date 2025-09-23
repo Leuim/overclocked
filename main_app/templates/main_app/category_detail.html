@@ -1,33 +1,48 @@
-{% extends 'base.html' %} {% load static %} {% block title %} {{ object.name }}
-{% endblock %} {% block content %}
-<h1 class="text-center fw-bold text-muted">{{ object.name }}</h1>
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} 
+{{ object.name }}
+{% endblock %} 
+{% block content %}
+<div class="container">
+    <div class="row align-items-center">
+
+        <div class="col-4">
+            <ul class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'categories-index' %}">Catgeories List</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'categories-detail' category.id %}">{{ category.name }}</a></li>
+            </ul>
+        </div>
+
+        <div class="col-4 text-center">
+            <h1 class="fw-bold text-muted mb-0">{{ category.name }}</h1>
+        </div>
+        <div class="col-4 text-end">
+
+        </div>
+    </div>
+</div>
+<hr style="color: rgb(2, 49, 110); border: 2px solid;">
+
 <div class="d-flex justify-content-between">
   <div class="mb-4 d-flex gap-3">
     {% if user.is_staff %}
     <div>
-      <a class="btn btn-primary shadow" href="{% url 'products-create' %}"
-        >Add New Category</a
-      >
+      <a class="btn btn-primary shadow" href="{% url 'products-create' %}">Add New Category</a>
     </div>
     {% endif %}
     <div>
-      <input
-        class="form-control shadow"
-        type="text"
-        name="search"
-        id="categorysearch"
-        placeholder="Search Product Name..."
-      />
+      <input class="form-control shadow" type="text" name="search" id="categorysearch"
+        placeholder="Search Product Name..." />
     </div>
   </div>
   {% if user.is_staff %}
   <div>
-    <a class="btn btn-primary" href="{% url 'categories-update' category.id %}"
-      ><i class="fa-solid fa-pen-to-square"></i> Edit {{ category.name }}</a
-    >
-    <a class="btn btn-danger" href="{% url 'categories-delete' category.id %}"
-      ><i class="fa-solid fa-trash"></i> Delete {{ category.name }}</a
-    >
+    <a class="btn btn-primary" href="{% url 'categories-update' category.id %}"><i
+        class="fa-solid fa-pen-to-square"></i> Edit {{ category.name }}</a>
+    <a class="btn btn-danger" href="{% url 'categories-delete' category.id %}"><i class="fa-solid fa-trash"></i> Delete
+      {{ category.name }}</a>
   </div>
   {% endif %}
 </div>
@@ -36,19 +51,12 @@
 <div class="row g-4">
   {% for product in products %}
   <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-    <a
-      class="text-decoration-none"
-      href="{% url 'products-detail' product.id %}"
-    >
+    <a class="text-decoration-none" href="{% url 'products-detail' product.id %}">
       <div class="category-card card shadow h-100 border-1">
         {% if product.image %}
 
-        <img
-          src="{{ product.image.url }}"
-          class="card-img-top img-fluid object-fit-cover rounded-top"
-          alt="{{ product.name }} image"
-          style="height: 160px"
-        />
+        <img src="{{ product.image.url }}" class="card-img-top img-fluid object-fit-cover rounded-top"
+          alt="{{ product.name }} image" style="height: 160px" />
 
         {% endif %}
 
@@ -59,42 +67,29 @@
             </div>
             <div>
               {% if product.quantity > 0 %}
-              <span class="badge bg-success"
-                >In Stock ({{ product.quantity }})</span
-              >
+              <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
               {% else %}
               <span class="badge bg-danger">Out of Stock</span>
               {% endif %}
             </div>
           </div>
 
-          <div
-            class="d-flex justify-content-between align-items-center mt-auto"
-          >
-            <div class="input-group input-group-sm" style="width: 90px">
-              <input
-                class="form-control text-center"
-                type="number"
-                min="1"
-                value="1"
-                name="quantity"
-              />
-              <button class="btn btn-warning" type="submit">
-                <i class="fa-solid fa-plus"></i>
+          <div class="d-flex justify-content-between align-items-center mt-auto">
+            <div>
+              <button class="btn btn-outline-primary" type="submit">
+                Order Now <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </button>
             </div>
-            <div>
-              <span class="fw-bold text-danger"
-                >{{ product.price }}
-                <span class="text-muted fw-bold">BD</span></span
-              >
-            </div>
+          <div>
+            <span class="fw-bold text-danger">{{ product.price }}
+              <span class="text-muted fw-bold">BD</span></span>
           </div>
         </div>
       </div>
-    </a>
   </div>
-  {% endfor %}
+  </a>
+</div>
+{% endfor %}
 </div>
 
 <div class="d-flex justify-content-center">

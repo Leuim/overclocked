@@ -6,8 +6,25 @@ Category List
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center fw-bold text-muted">Categories List</h1>
-<hr style="border: none; height: 2px; background-color: rgb(148, 148, 148);">
+<div class="container">
+    <div class="row align-items-center">
+
+        <div class="col-4">
+            <ul class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'categories-index' %}">Categories</a></li>
+            </ul>
+        </div>
+
+        <div class="col-4 text-center">
+            <h1 class="fw-bold text-muted mb-0">Categories</h1>
+        </div>
+        <div class="col-4 text-end">
+
+        </div>
+    </div>
+</div>
+<hr style="color: rgb(2, 49, 110); border: 2px solid;">
 <div class="mb-4 d-flex gap-3">
     {% if user.is_staff %}
     <div>
