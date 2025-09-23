@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-from .forms import UserProfileCreationForm
+from .forms import UserProfileCreationForm, ProfileForm
 from .models import Category, Product, Profile, Cart, Cartitem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -35,9 +35,24 @@ def all_categories(request):
     categories = Category.objects.all()
     return render(request, "category/index.html", categories)
 
+@login_required
 def profile(request):
     profile = request.user.profile
     return render(request, 'profile.html', {"profile":profile})
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile 
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile') 
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form})
 
 # Category cbv's
 class CategoryCreate(LoginRequiredMixin, CreateView):
@@ -55,11 +70,11 @@ class CategoryDetail(DetailView):
 class CategoryList(ListView):
     model = Category
     
-class CategoryDelete(DeleteView):
+class CategoryDelete(LoginRequiredMixin, DeleteView):
     model = Category
     success_url = '/categories/' 
 
-class CategoryUpdate(UpdateView):
+class CategoryUpdate(LoginRequiredMixin, UpdateView):
     model = Category
     fields = '__all__'    
 # Product cbv's
@@ -69,19 +84,19 @@ class ProductList(ListView):
 class ProductDetail(DetailView):
     model = Product
     
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['name','quantity','price','image','description', 'category']
     
-class ProductUpdate(UpdateView):
+class ProductUpdate(LoginRequiredMixin, UpdateView):
     model = Product
     fields = ['name','quantity','price','image','description', 'category']
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = '/products/'    
     
-class CartDetail(DetailView):
+class CartDetail(LoginRequiredMixin, DetailView):
     model= Cart
     template_name = "main_app/cart_detail.html"
     context_object_name = "cart"
@@ -93,6 +108,7 @@ class CartDetail(DetailView):
         )
         return cart
 
+@login_required
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     qty = int(request.POST.get("quantity", 1)) 
@@ -118,6 +134,8 @@ def search_suggestions(request):
             "url": reverse("products-detail", args=[p.id]) 
         })
     return JsonResponse(results, safe=False)
+
+@login_required
 def checkout(request):
     if request.method == "POST":
         address = request.POST.get("address")
@@ -126,6 +144,8 @@ def checkout(request):
             status="completed",
         )
         return redirect("home")
+
+@login_required
 def order_history(request):
     # Get all completed carts for this user
     orders = Cart.objects.filter(user=request.user, status="completed").order_by("-id")

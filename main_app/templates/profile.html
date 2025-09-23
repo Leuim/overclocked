@@ -4,6 +4,26 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<div class="container">
+    <div class="row align-items-center">
+
+        <div class="col-4">
+            <ul class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'profile' %}">Profile</a></li>
+            </ul>
+        </div>
+
+        <div class="col-4 text-center">
+            <h1 class="fw-bold text-muted mb-0">Profile</h1>
+        </div>
+        <div class="col-4 text-end">
+
+        </div>
+    </div>
+</div>
+<hr style="color: rgb(2, 49, 110); border: 2px solid;">
+
 <div class="container my-5">
     <div class="card shadow-lg border-1 p-4">
         <div class="row g-4 align-items-center">
@@ -11,14 +31,13 @@
 
             <div class="col-md-3 d-flex justify-content-center">
                 {% if user.profile.image %}
-                
-                    <img src="{{ user.profile.image.url }}" alt="Profile Image" 
-                         class="rounded-circle shadow-sm" 
-                         style="width: 120px; height: 120px; object-fit: cover;">
+
+                <img src="{{ user.profile.image.url }}" alt="Profile Image" class="rounded-circle shadow-sm"
+                    style="width: 120px; height: 120px; object-fit: cover;">
                 {% else %}
-                    <div class="profile-avatar shadow-sm" style="width: 120px; height: 120px; font-size: 48px;">
-                        {{ user.username|first|upper }}
-                    </div>
+                <div class="profile-avatar shadow-sm" style="width: 120px; height: 120px; font-size: 48px;">
+                    {{ user.username|first|upper }}
+                </div>
                 {% endif %}
             </div>
 
@@ -29,8 +48,8 @@
                 <p class="text-muted mb-2"><strong>Phone:</strong> {{ user.profile.phone|default:"Not set" }}</p>
                 <p class="text-muted mb-2"><strong>Address:</strong> {{ user.profile.address|default:"Not set" }}</p>
 
- 
-                <a href="" class="btn btn-primary mt-3">
+
+                <a href="{% url 'edit-profile' %}" class="btn btn-primary mt-3">
                     <i class="fa-solid fa-pen-to-square me-2"></i> Edit Profile
                 </a>
             </div>
