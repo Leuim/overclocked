@@ -12,13 +12,12 @@
 
 
             <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
-                 {% if product.image %}
+                {% if product.image %}
 
-                <img src="{{ product.image.url }}" 
-                     alt="{{ product.name }} image" 
-                     class="img-fluid rounded p-3 object-fit-cover"
-                     style="width: 100%; max-width: 450px; height: 450px; object-fit: cover;">
-                     {% endif %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }} image"
+                    class="img-fluid rounded p-3 object-fit-cover"
+                    style="width: 100%; max-width: 450px; height: 450px; object-fit: cover;">
+                {% endif %}
             </div>
 
             <div class="col-md-8">
@@ -26,15 +25,15 @@
 
                     <h1 class="fw-bold mb-3">{{ product.name }}</h1>
 
-                    <h2 class="text-danger fw-bold mb-3">
-                        {{ product.price }} <small class="text-muted">BD</small>
+                    <h2 class="text-danger fw-bold mb-3 text-muted">
+                        {{ product.price }} BHD
                     </h2>
 
                     <p class="mb-3">
                         {% if product.quantity > 0 %}
-                            <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
+                        <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
                         {% else %}
-                            <span class="badge bg-danger">Out of Stock</span>
+                        <span class="badge bg-danger">Out of Stock</span>
                         {% endif %}
                     </p>
 
@@ -43,16 +42,16 @@
                     </p>
 
                     <form method="post" action="{% url 'add-to-cart' product.id %}">
-    {% csrf_token %}
-    <div class="d-flex align-items-center gap-2 mb-4">
-        <div class="input-group input-group-sm" style="width: 120px;">
-            <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
-        </div>
-        <button class="btn btn-warning" type="submit" {% if product.quantity == 0 %}disabled{% endif %}>
-            <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
-        </button>
-    </div>
-</form>
+                        {% csrf_token %}
+                        <div class="d-flex align-items-center gap-2 mb-4">
+                            <div class="input-group input-group-sm" style="width: 120px;">
+                                <input class="form-control text-center" type="number" min="1" value="1" name="quantity">
+                            </div>
+                            <button class="btn btn-warning" type="submit" {% if product.quantity == 0 %}disabled{% endif %}>
+                                <i class="fa-solid fa-cart-plus me-2"></i> Add to Cart
+                            </button>
+                        </div>
+                    </form>
 
                     {% if user.is_staff %}
                     <div class="d-flex gap-2 mt-auto">

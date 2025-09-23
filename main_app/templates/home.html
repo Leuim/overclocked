@@ -1,62 +1,172 @@
-{% extends 'base.html' %} {% load static %} {% block title %} Home {% endblock%}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
 {% block content %}
-
-<div style="width: 100%">
-  <div id="products-slides" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      {% for product in products|slice:":5" %}
-      <button
-        type="button"
-        data-bs-target="#products-slides"
-        data-bs-slide-to="{{ forloop.counter0 }}"
-        class="{% if forloop.first %}active{% endif %}"
-      ></button>
-      {% endfor %}
-    </div>
-
-    <div class="carousel-inner">
-      {% for product in products|slice:":5" %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        {% if product.image %}
-        <img
-          src="{{ product.image.url }}"
-          alt="{{ product.name }}"
-          height="400px"
-          class="d-block w-100"
-        />
-        {% else %}
-        <img
-          src="{% static 'default-product.png' %}"
-          alt="{{ product.name }}"
-          height="400px"
-          class="d-block w-100"
-        />
-        {% endif %}
+<div class="container-fluid ">
+  <div class="d-flex gap-3 flex-wrap ">
+   
+    <div id="products-slides" class="carousel slide flex-grow-1 w-50 shadow-lg" data-bs-ride="carousel"
+      style="max-height: 400px;">
+      <div class="carousel-indicators">
+        {% for product in products|slice:":5" %}
+        <button type="button" data-bs-target="#products-slides" data-bs-slide-to="{{ forloop.counter0 }}"
+          class="{% if forloop.first %}active{% endif %}"></button>
+        {% endfor %}
       </div>
+
+      <div class="carousel-inner rounded-2">
+        {% for product in products|slice:":5" %}
+        <a href="{% url 'products-detail' product.id %}">
+          <div
+            class="carousel-item {% if forloop.first %}active{% endif %} d-flex justify-content-center align-items-center bg-dark">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="" style="height: 400px; width: 600px;">
+            {% else %}
+            <img src="{% static 'default-product.png' %}" alt="{{ product.name }}" class="d-block w-100"
+              style="height: 400px; object-fit: cover;">
+            {% endif %}
+            <div class="carousel-caption custom-caption" style="background-color: rgb(0, 0, 0, 0.4);">
+              <h3>{{ product.name }}</h3>
+              <p class="fw-bold text-light">{{ product.price }} BHD <span
+                  class="badge bg-{% if product.quantity <= 0 %}danger{% else %}success{% endif %}">{% if product.quantity <= 0 %}Out of stock{% else %}In stock {{ product.quantity }}{% endif %}</span>
+              </p>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#products-slides" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#products-slides" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <div class="d-flex flex-column gap-2 w-25 ">
+      {% for category in categories|slice:":3" %}
+      <a href="{% url 'categories-detail' category.id %}" class="text-decoration-none rounded-4 flex-grow-1 d-block shadow-lg"
+        style="
+        background-image: url('{{ category.image.url }}');
+        background-size: cover;
+        background-position: center;
+        border: 2px solid rgb(226,226,226);">
+
+        <div class="text-white p-2 fw-bold rounded-top-3 text-center" style="background-color: rgba(0,0,0,0.7);">
+          {{ category.name }}
+        </div>
+
+      </a>
       {% endfor %}
     </div>
 
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#products-slides"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#products-slides"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-
-  <div class="container-fluid mt-2 d-flex bg-primary">
-    <h1>hello</h1>
   </div>
 </div>
 
+<div class="container-fluid mt-4 py-4" style="background-color: #313d49;">
+  <div class="d-flex flex-wrap justify-content-center gap-4">
+
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-dark rounded-circle d-flex justify-content-center align-items-center"
+        style="width: 100px; height: 100px; border: 5px solid #53677a;">
+        <i class="fa fa-dollar-sign text-primary" style="font-size: 40px;"></i>
+      </div>
+      <div class="text-white">
+        <h5 class="text-primary">Installments</h5>
+        <p class="mb-0">Shop now, pay later with easy installments.</p>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-dark rounded-circle d-flex justify-content-center align-items-center"
+        style="width: 100px; height: 100px; border: 5px solid #53677a;">
+        <i class="fa-solid fa-circle-info text-primary" style="font-size: 40px;"></i>
+      </div>
+      <div class="text-white">
+        <h5 class="text-primary">24/7 Support</h5>
+        <p class="mb-0">We’re here to help anytime.</p>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-dark rounded-circle d-flex justify-content-center align-items-center"
+        style="width: 100px; height: 100px; border: 5px solid #53677a;">
+        <i class="fa-solid fa-tag text-primary" style="font-size: 40px;"></i>
+      </div>
+      <div class="text-white">
+        <h5 class="text-primary">Best Price Guarantee</h5>
+        <p class="mb-0">Get the best prices on all products.</p>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-dark rounded-circle d-flex justify-content-center align-items-center"
+        style="width: 100px; height: 100px; border: 5px solid #53677a;">
+        <i class="fa-solid fa-truck text-primary" style="font-size: 40px;"></i>
+      </div>
+      <div class="text-white">
+        <h5 class="text-primary">Fast Delivery</h5>
+        <p class="mb-0">Get your order in as little as 2 days.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div>
+  {% for category in categories_products|slice:":4" %}
+  <h1 class="fw-semibold mt-1" style="color: rgb(16, 16, 37);">{{category.name }}</h1>
+  <hr class="" style="color: rgb(2, 49, 110); width: 200px; border: 4px solid;">
+  <div class="row">
+    {% for product in category.product_set.all|slice:":6" %}
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+      <a class="text-decoration-none" href="{% url 'products-detail' product.id %}">
+        <div class="category-card card shadow h-100 border-1">
+          {% if product.image %}
+
+          <img src="{{ product.image.url }}" class="card-img-top img-fluid object-fit-cover rounded-top"
+            alt="{{ product.name }} image" style="height: 160px" />
+
+          {% endif %}
+
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h2 class="card-title h4 fw-bold">{{ product.name }}</h2>
+              </div>
+              <div>
+                {% if product.quantity > 0 %}
+                <span class="badge bg-success">In Stock ({{ product.quantity }})</span>
+                {% else %}
+                <span class="badge bg-danger">Out of Stock</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+              <div class="input-group input-group-sm" style="width: 90px">
+                <input class="form-control text-center" type="number" min="1" value="1" name="quantity" />
+                <button class="btn btn-warning" type="submit">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div>
+                <span class="fw-bold text-danger">{{ product.price }}
+                  <span class="text-muted fw-bold">BD</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <div>No products in this category</div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

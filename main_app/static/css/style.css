@@ -82,7 +82,7 @@ body {
 .main-area {
   flex-grow: 1;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: #dce8f5;
 }
 
 .brand {
@@ -124,4 +124,13 @@ body {
   font-weight: bold;
   font-size: 48px;     
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.custom-caption {
+  width: 35%; 
+  left: 50%;  
+  transform: translateX(-50%); 
+  background-color: rgba(0,0,0,0.5); 
+  padding: 1rem; 
+  border-radius: 0.5rem; 
 }

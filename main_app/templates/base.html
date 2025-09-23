@@ -106,22 +106,21 @@
           {% endif %}
         </div>
 
-        <form class="d-flex w-25 position-relative" onsubmit="return false;">
+        <form class="d-flex w-25 position-relative "  onsubmit="return false;">
           <input
             id="searchInput"
-            class="form-control me-2"
+            class="form-control me-2 shadow-sm "
             type="search"
             placeholder="Search an item..."
             aria-label="Search"
             autocomplete="off"
+            style="background-color: rgb(228, 228, 228); border: 1px solid rgb(158, 158, 158);"
           />
-          <button class="btn btn-outline-secondary" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+
           <ul
             id="searchDropdown"
-            class="list-group position-absolute w-100"
-            style="top: 100%; z-index: 1000"
+            class="list-group position-absolute w-100 "
+            style="top: 100%; z-index: 1000; cursor: pointer;"
           ></ul>
         </form>
 
@@ -129,6 +128,11 @@
           {% if user.is_authenticated %}
           <a href="{% url 'cart-detail' %}" class="btn btn-secondary">
             <i class="fa-solid fa-cart-shopping"></i>
+              {% if cart_count > 0 %}
+               <span class=" badge rounded-pill bg-danger">
+              {{ cart_count }}
+              </span>
+               {% endif %}
           </a>
           {% else %}
           <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
@@ -167,7 +171,7 @@
               <span>${product.name}</span>
             `;
               item.onclick = () => {
-                window.location.href = `/products/${product.id}/`; // adjust detail page URL
+                window.location.href = `/products/${product.id}/`; 
               };
               searchDropdown.appendChild(item);
             });
