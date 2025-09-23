@@ -155,6 +155,11 @@ def checkout(request):
 
 @login_required
 def order_history(request):
-    # Get all completed carts for this user
-    orders = Cart.objects.filter(user=request.user, status="completed").order_by("-id")
+    if request.user.is_staff:
+        orders = Cart.objects.filter(status="completed").order_by("-created_at")
+    else:
+        orders = Cart.objects.filter(user=request.user, status="completed").order_by("-created_at")
     return render(request, "main_app/order_history.html", {"orders": orders})
+def all_orders(request):
+    orders = Cart.objects.filter(status="completed").order_by("-created_at")
+    return render(request, "orders/all_orders.html", {"orders": orders})

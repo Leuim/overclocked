@@ -1,29 +1,47 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block title %} Orders {% endblock %}
 
+{% block content %}
 <div class="container mt-4">
-  <h2>Your Order History</h2>
+  <h2>
+    {% if user.is_staff %}
+      All Orders
+    {% else %}
+      Your Order History
+    {% endif %}
+  </h2>
 
   {% if orders %}
   <div class="list-group">
     {% for order in orders %}
     <div class="list-group-item mb-3">
       <h5>Order #{{ order.id }}</h5>
+
+      {% if user.is_staff %}
+        <p><strong>User:</strong> {{ order.user.username }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"M d, Y H:i" }}</p>
+      {% endif %}
+
       <p><strong>Total:</strong> ${{ order.total_price }}</p>
       <p><strong>Status:</strong> {{ order.status }}</p>
 
       <h6>Items:</h6>
       <ul>
         {% for item in order.cartitem_set.all %}
-        <li>
-          {{ item.product.name }} (x{{ item.quantity }}) - ${{ item.price }}
-        </li>
+        <li>{{ item.product.name }} (x{{ item.quantity }}) - ${{ item.price }}</li>
         {% endfor %}
       </ul>
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <p>You haven’t placed any orders yet.</p>
+  <p>
+    {% if user.is_staff %}
+      No orders found.
+    {% else %}
+      You haven’t placed any orders yet.
+    {% endif %}
+  </p>
   {% endif %}
 </div>
 {% endblock %}
