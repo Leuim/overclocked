@@ -121,7 +121,15 @@ def add_to_cart(request, product_id):
     cart.total_price = sum(i.price for i in cart.cartitem_set.all())
     cart.save()
     return redirect('cart-detail')
+def remove_from_cart(request, item_id):
+    if request.method == "POST":
+        item = Cartitem.objects.get(id=item_id)
+        cart = item.cart
+        item.delete()
+        cart.total_price = sum(i.price for i in cart.cartitem_set.all())
+        cart.save()
 
+    return redirect("cart-detail")
 def search_suggestions(request):
     query = request.GET.get("q", "")
     products = Product.objects.filter(name__icontains=query)[:5]  # limit to 5
