@@ -14,7 +14,7 @@ Login
         </div>
 
         <div class="col-4 text-center">
-            <h1 class="fw-bold text-muted mb-0">Products</h1>
+            <h1 class="fw-bold text-muted mb-0">Login</h1>
         </div>
         <div class="col-4 text-end">
 
@@ -22,10 +22,26 @@ Login
     </div>
 </div>
 <hr style="color: rgb(2, 49, 110); border: 2px solid;">
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" name="btn" value="login">
-    <p>Don't have an account? <a href="{% url 'signup' %}">Click here to register!</a></p>
-</form>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;" >
+  <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Login</h3>
+
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+
+        <p class="text-center mb-0">
+          Don't have an account?
+          <a href="{% url 'signup' %}">Click here to register!</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
