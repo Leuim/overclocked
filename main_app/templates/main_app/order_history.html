@@ -1,46 +1,41 @@
-{% extends "base.html" %} {% block content %}
-<div class="container">
-    <div class="row align-items-center">
-        <div class="col-4">
-            <ul class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'order-history' %}">Order History</a></li>
-            </ul>
-        </div>
+{% extends "base.html" %}
+{% block title %} Orders {% endblock %}
 
-        <div class="col-4 text-center">
-            <h1 class="fw-bold text-muted mb-0">Order History</h1>
-        </div>
-        <div class="col-4 text-end">
-
-        </div>
-    </div>
-</div>
-<hr style="color: rgb(2, 49, 110); border: 2px solid;">
+{% block content %}
 <div class="container mt-4">
-
+  <h2>Your Order History</h2>
 
   {% if orders %}
   <div class="list-group">
     {% for order in orders %}
     <div class="list-group-item mb-3">
       <h5>Order #{{ order.id }}</h5>
+
+      {% if user.is_staff %}
+        <p><strong>User:</strong> {{ order.user.username }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"M d, Y H:i" }}</p>
+      {% endif %}
+
       <p><strong>Total:</strong> ${{ order.total_price }}</p>
       <p><strong>Status:</strong> {{ order.status }}</p>
 
       <h6>Items:</h6>
       <ul>
         {% for item in order.cartitem_set.all %}
-        <li>
-          {{ item.product.name }} (x{{ item.quantity }}) - ${{ item.price }}
-        </li>
+        <li>{{ item.product.name }} (x{{ item.quantity }}) - ${{ item.price }}</li>
         {% endfor %}
       </ul>
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <p>You haven’t placed any orders yet.</p>
+  <p>
+    {% if user.is_staff %}
+      No orders found.
+    {% else %}
+      You haven’t placed any orders yet.
+    {% endif %}
+  </p>
   {% endif %}
 </div>
 {% endblock %}

@@ -121,7 +121,15 @@ def add_to_cart(request, product_id):
     cart.total_price = sum(i.price for i in cart.cartitem_set.all())
     cart.save()
     return redirect('cart-detail')
+def remove_from_cart(request, item_id):
+    if request.method == "POST":
+        item = Cartitem.objects.get(id=item_id)
+        cart = item.cart
+        item.delete()
+        cart.total_price = sum(i.price for i in cart.cartitem_set.all())
+        cart.save()
 
+    return redirect("cart-detail")
 def search_suggestions(request):
     query = request.GET.get("q", "")
     products = Product.objects.filter(name__icontains=query)[:5]  # limit to 5
@@ -147,6 +155,11 @@ def checkout(request):
 
 @login_required
 def order_history(request):
-    # Get all completed carts for this user
-    orders = Cart.objects.filter(user=request.user, status="completed").order_by("-id")
+    if request.user.is_staff:
+        orders = Cart.objects.filter(status="completed").order_by("-created_at")
+    else:
+        orders = Cart.objects.filter(user=request.user, status="completed").order_by("-created_at")
     return render(request, "main_app/order_history.html", {"orders": orders})
+def all_orders(request):
+    orders = Cart.objects.filter(status="completed").order_by("-created_at")
+    return render(request, "orders/all_orders.html", {"orders": orders})
