@@ -1,6 +1,6 @@
 # OverClocked 🖥️🛒
 
-![App Screenshot](https://i.imgur.com/E6UPfVR.png)
+![App Screenshot](https://imgur.com/a/GQFZiIu)
 
 ## Description
 OverClocked is a full-stack e-commerce web application where users can browse products, add them to a shopping cart, and place orders. Admins can manage categories, products, and view all order histories. The app was built to simulate a real shopping experience and to practice building CRUD operations, authentication, and order management in Django.  
