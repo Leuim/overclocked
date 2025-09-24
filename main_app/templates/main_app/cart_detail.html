@@ -123,7 +123,7 @@ document.querySelectorAll(".update-qty").forEach(button => {
 
     qtyInput.value = currentQty;
 
-    // Send AJAX request to backend
+    
     fetch(`/cart/update/${itemId}/`, {
       method: "POST",
       headers: {
@@ -134,7 +134,6 @@ document.querySelectorAll(".update-qty").forEach(button => {
     })
     .then(res => res.json())
     .then(data => {
-      // Update price and total dynamically
       document.querySelector(`#item-price-${itemId}`).textContent = data.item_price;
       document.querySelector("#cart-total").textContent = data.cart_total;
     });
