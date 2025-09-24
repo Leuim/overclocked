@@ -36,7 +36,7 @@ Category List
 {% if category_list %}
 <div class="row g-4">
     {% for category in category_list %}
-    <div class="col-md-2">
+    <div class="col-2">
         <a href="{% url 'categories-detail' category.id %}" class="text-decoration-none">
             <div class="category-card card shadow">
                 {% if category.image %}
