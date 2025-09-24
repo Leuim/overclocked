@@ -4,26 +4,42 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+<div class="container">
+    <div class="row align-items-center">
 
-{% if error_message %}
-<p>{{ error_message }}</p>
-{% endif %}
+        <div class="col-4">
+            <ul class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'signup' %}">Register</a></li>
+            </ul>
+        </div>
 
+        <div class="col-4 text-center">
+            <h1 class="fw-bold text-muted mb-0">Register Account</h1>
+        </div>
+        <div class="col-4 text-end">
+
+        </div>
+    </div>
+</div>
+<hr style="color: rgb(2, 49, 110); border: 2px solid;">
 {% if form.errors %}
-<ul>
-    {% for field in form %}
-    {% for error in field.errors %}
-    <li>{{ field.label }}: {{ error }}</li>
-    {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-</ul>
+  <div class="alert alert-danger shadow-sm rounded-3">
+    <ul class="mb-0">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endif %}
 
 <div class="container my-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="col-md-6">
             <div class="card shadow border-2">
                 <div class="card-body p-4">
